@@ -1,0 +1,20 @@
+[
+    {
+        "id":1,
+        "name":"A1 Medical center",
+        "latitude":6.803344,
+        "longitude":79.939461
+    },
+    {
+        "id":2,
+        "name":"A2 Medical center",
+        "latitude":6.801436,
+        "longitude":79.935678
+    },
+    {
+        "id":3,
+        "name":"A3 Medical center",
+        "latitude":6.803822,
+        "longitude":79.943306
+    }
+]
