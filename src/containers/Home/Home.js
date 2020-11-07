@@ -120,7 +120,7 @@ class HomeScreen extends Component {
 
             this.setState({
               curLocation: myLocation,
-
+              focusedRegion:myLocation
             }, () => console.log(`My Location`, this.state.curLocation))
 
           } else {
