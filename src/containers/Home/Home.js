@@ -61,9 +61,6 @@ class HomeScreen extends Component {
 
   componentDidMount() {
 
-    if (this.props.isRehydrated) {
-
-    }
   }
 
 
@@ -76,6 +73,9 @@ class HomeScreen extends Component {
       if (this.props.isRehydrated === false && nextProps.isRehydrated === true) {
         this.LoadInitials(nextProps);
       }
+      if(this.props.isLoadingTest==true && nextProps.isLoadingTest===false){
+          //do what ever you want after data retrived.
+      }
 
 
     }
@@ -87,6 +87,11 @@ class HomeScreen extends Component {
 
   LoadInitials = async (nextProps) => {
     this._locationConfigurations();
+    this._callAPI();
+  }
+
+  _callAPI = async() => {
+      await this.props.testAPI(); 
   }
 
 

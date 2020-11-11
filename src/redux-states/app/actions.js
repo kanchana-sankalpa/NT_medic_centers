@@ -8,11 +8,34 @@
  * --------------------------------------------------------------
  */
 
-
+import { TestApi } from '@api';
 
 
 export function appStateLoaded() {
     return async dispatch => {
         dispatch({ type: "APP_STATE_LOADED" });
+    }
+}
+
+
+
+export function testAPI() {
+    return async dispatch => {
+        try {
+            dispatch({ type: "APP_API_TEST_LOADING", isLoading: true });
+            let apiResponse = await TestApi.testAPIFun1("yourtoken",{"id":1,"name":"ttt"});
+            let respJson = await apiResponse.json();//you can get json object of response here
+           
+            if (apiResponse.status === 200) {
+
+                //do wht ever you want using response
+
+                dispatch({ type: "APP_API_TEST_LOADING", isLoading: false });
+            } else {
+                throw new Error("Got api error");
+            }
+        } catch (error) {
+            dispatch({ type: "APP_API_TEST_LOADING", isLoading: false, error: error });
+        }
     }
 }
