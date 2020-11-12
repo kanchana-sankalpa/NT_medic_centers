@@ -9,8 +9,9 @@
 
 export const initialState = {
     isRehydrated: false,//should false
-    isLoadingTest:false,
-    errorTest:""
+    isLoadingMedicalCenters:false,
+    errorMedicalCentersLoad:"",
+    MedicalCenters:[]
 };
 
 export default function appReducer(state = initialState, action) {
@@ -20,11 +21,17 @@ export default function appReducer(state = initialState, action) {
                 ...state,
                 isRehydrated: true
         };
-        case "APP_API_TEST_LOADING":
+
+        case "APP_MEDICAL_CENTERS_LOADING":
             return {
                 ...state,
-                isLoadingTest: action.isLoading,
-                errorTest: action.error ? action.error : ""
+                isLoadingMedicalCenters: action.isLoading,
+                errorMedicalCentersLoad: action.error ? action.error : ""
+        };
+        case "APP_MEDICAL_CENTERS_SET":
+            return {
+                ...state,
+                MedicalCenters: action.data,
         };
         default:
             return state;

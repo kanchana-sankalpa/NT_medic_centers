@@ -8,7 +8,7 @@
  * --------------------------------------------------------------
  */
 
-import { TestApi } from '@api';
+import { CommonApi } from '@api';
 
 
 export function appStateLoaded() {
@@ -19,30 +19,24 @@ export function appStateLoaded() {
 
 
 
-export function testAPI() {
+export function getAllMedicalCentersAction() {
     return async dispatch => {
         try {
-            dispatch({ type: "APP_API_TEST_LOADING", isLoading: true });
-            let apiResponse = await TestApi.testAPIFun1("yourtoken",{"id":1,"name":"ttt"});
-            console.log('---------------- apiResponse-----------------');
-            console.log(apiResponse.status);
-            console.log(apiResponse);
-          
+            dispatch({ type: "APP_MEDICAL_CENTERS_LOADING", isLoading: true });
+            let apiResponse = await CommonApi.getAllMedicalCenters();
             if (apiResponse.status === 200) {
-               
-                //do wht ever you want using response
-                let respJson = await  apiResponse.json();//you can get json object of response here
-         
-                console.log('----------------testAPI response -----------------');
-               console.log(respJson);
 
-                dispatch({ type: "APP_API_TEST_LOADING", isLoading: false });
+                let respJson = await apiResponse.json();
+                console.log(respJson);
+                dispatch({ type: "APP_MEDICAL_CENTERS_SET", data: respJson.data });
+
+                dispatch({ type: "APP_MEDICAL_CENTERS_LOADING", isLoading: false });
             } else {
                 console.log("apiResponse.status === 200 error ");
                 throw new Error("Got api error");
             }
         } catch (error) {
-            dispatch({ type: "APP_API_TEST_LOADING", isLoading: false, error: error });
+            dispatch({ type: "APP_MEDICAL_CENTERS_LOADING", isLoading: false, error: error });
         }
     }
 }

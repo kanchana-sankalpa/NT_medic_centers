@@ -26,6 +26,8 @@ async function testAPIFun2(token) {
 }
 
 
+
+
 export default {
     testAPIFun2,testAPIFun1
 };

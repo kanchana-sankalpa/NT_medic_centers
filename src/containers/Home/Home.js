@@ -3,7 +3,7 @@
  * Buwaneka Sumanasekara <buwaneka@interlective.com>
  */
 import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet, Image, View, } from 'react-native';
+import { SafeAreaView, StyleSheet, Image, View, Text } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import * as ScreenAction from '@common';
 import RNLocation from 'react-native-location';
@@ -52,7 +52,8 @@ class HomeScreen extends Component {
         longitude: 130.8456,
         latitudeDelta: 0.0050,
         longitudeDelta: 0.0021,
-      }
+      },
+      arMedicalCenters: []
     };
   }
 
@@ -60,7 +61,7 @@ class HomeScreen extends Component {
 
 
   componentDidMount() {
-
+    this.LoadInitials();
   }
 
 
@@ -73,8 +74,14 @@ class HomeScreen extends Component {
       if (this.props.isRehydrated === false && nextProps.isRehydrated === true) {
         this.LoadInitials(nextProps);
       }
-      if(this.props.isLoadingTest==true && nextProps.isLoadingTest===false){
-          //do what ever you want after data retrived.
+      if (this.props.isLoadingMedicalCenters == true && nextProps.isLoadingMedicalCenters === false) {
+        //do what ever you want after data retrived.
+        if (nextProps.errorMedicalCentersLoad === "") {
+          this.setState({ arMedicalCenters: nextProps.MedicalCenters })
+        } else {
+          //error
+          alert(nextProps.errorMedicalCentersLoad)
+        }
       }
 
 
@@ -90,9 +97,8 @@ class HomeScreen extends Component {
     this._callAPI();
   }
 
-  _callAPI = async() => {
-    console.log('_callAPI');
-      await this.props.testAPI(); 
+  _callAPI = async () => {
+    await this.props.getAllMedicalCentersAction();
   }
 
 
@@ -128,7 +134,7 @@ class HomeScreen extends Component {
 
             this.setState({
               curLocation: myLocation,
-              focusedRegion:myLocation
+              focusedRegion: myLocation
             }, () => console.log(`My Location`, this.state.curLocation))
 
           } else {
@@ -158,8 +164,7 @@ class HomeScreen extends Component {
 
   render() {
     const { focusedRegion } = this.state;
-    console.log('focusedRegion');
-    console.log(focusedRegion);
+
     return (
       <View style={styles.container}>
 
@@ -194,23 +199,29 @@ class HomeScreen extends Component {
     )
   }
   _renderNearMedicalCentersLocation = () => {
-    const data = json_medicalCenters_loc;
-    console.log(data);
+    // const data = json_medicalCenters_loc;
+    const data = this.state.arMedicalCenters;
     return (
       <>
-        {data.map((v, i) => (
-          <Marker
-            coordinate={{
-              latitude: parseFloat(v.latitude),
-              longitude: parseFloat(v.longitude),
-            }}
-            key={`marker_medical_center${i}`}
-          >
-
-            <Image style={styles.markerImgStyle} resizeMode={"contain"} source={require('@images/medical_center.png')} />
-
-          </Marker>
-        ))}
+        {data.map((v, i) => {
+          try {
+            const loc = v.location.coordinates;
+            return (
+              <Marker
+                coordinate={{
+                  latitude: parseFloat(loc[0]),
+                  longitude: parseFloat(loc[1]),
+                }}
+                key={`marker_medical_center${i}`}
+              >
+                <Text>{v.name}</Text>
+                <Image style={styles.markerImgStyle} resizeMode={"contain"} source={require('@images/medical_center.png')} />
+              </Marker>
+            )
+          } catch (error) {
+            return (null);
+          }
+        })}
 
       </>
 

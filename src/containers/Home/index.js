@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 
 //actions
-import * as TestActions from "@redux-states/app/actions";
+import * as AppActions from "@redux-states/app/actions";
 
 // The component we're mapping to
 import HomeScreen from './Home';
@@ -14,14 +14,15 @@ import HomeScreen from './Home';
 // What data from the store shall we send to the component?
 const mapStateToProps = (state) => ({
     isRehydrated:state.app.isRehydrated,
-    isLoadingTest:state.app.isLoadingTest,
-    errorTest:state.app.errorTest
+    isLoadingMedicalCenters:state.app.isLoadingMedicalCenters,
+    errorMedicalCentersLoad:state.app.errorMedicalCentersLoad,
+    MedicalCenters:state.app.MedicalCenters
   
 });
 
 // Any actions to map to the component?
 const mapDispatchToProps = {
-    testAPI:TestActions.testAPI
+    getAllMedicalCentersAction:AppActions.getAllMedicalCentersAction
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
