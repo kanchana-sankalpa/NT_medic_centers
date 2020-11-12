@@ -1,8 +1,8 @@
-
+//const API_CONFIG.DEFAULT_TIMEOUT= 7000
 
 async function testAPIFun1(token,obj) {
-    return fetch(`https://yourdomain/api/test`, {
-        timeout: API_CONFIG.DEFAULT_TIMEOUT,
+    return fetch(`https://covid19-healthylk.herokuapp.com/api/medical`, {
+        timeout: 7000,
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -14,8 +14,8 @@ async function testAPIFun1(token,obj) {
 }
 
 async function testAPIFun2(token) {
-    return fetch(`https://yourdomain/api/test`, {
-        timeout: API_CONFIG.DEFAULT_TIMEOUT,
+    return fetch(`https://covid19-healthylk.herokuapp.com/api/medical`, {
+        timeout: 7000,
         method: 'GET',
         headers: {
             'Accept': 'application/json',

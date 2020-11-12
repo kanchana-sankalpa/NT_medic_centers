@@ -44,12 +44,12 @@ class HomeScreen extends Component {
       isLoading: false,
       error: "",
       curLocation: {
-        latitude: 6.805383,
-        longitude: 79.9426825
+        latitude: -12.4634,
+        longitude: 130.8456
       },
       focusedRegion: {
-        latitude: 6.805383,
-        longitude: 79.9426825,
+        latitude: -12.4634,
+        longitude: 130.8456,
         latitudeDelta: 0.0050,
         longitudeDelta: 0.0021,
       }
@@ -91,6 +91,7 @@ class HomeScreen extends Component {
   }
 
   _callAPI = async() => {
+    console.log('_callAPI');
       await this.props.testAPI(); 
   }
 
@@ -120,7 +121,9 @@ class HomeScreen extends Component {
             const lastLocation = locations[(locations.length - 1)];
             const myLocation = {
               latitude: lastLocation.latitude,
-              longitude: lastLocation.longitude
+              longitude: lastLocation.longitude,
+              latitudeDelta: 0.0050,
+              longitudeDelta: 0.0021
             };
 
             this.setState({
@@ -155,6 +158,8 @@ class HomeScreen extends Component {
 
   render() {
     const { focusedRegion } = this.state;
+    console.log('focusedRegion');
+    console.log(focusedRegion);
     return (
       <View style={styles.container}>
 
